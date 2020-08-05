@@ -10,18 +10,17 @@ import java.util.Map;
 
 public class ExcelUtils {
 
-    public static void VLOOKUP(Excel excel, char ch1, int start1, int end1,char ch2, char ch3, int start2, int end2, char ch4) {
-        Sheet sheet = getSheet(excel, "test2");
+    public static void VLOOKUP(Excel excel, String sheetName, char ch1, int start1, int end1,char ch2, char ch3, int start2, int end2, char ch4) {
+        Sheet sheet = getSheet(excel, sheetName);
         Map<Object, Object> findMap = new HashMap<>();
         Row row;
         Cell cell;
         for(int i = start2 - 1; i < end2; i++) {
             findMap.put(getValue(sheet, i, ch3 - 'A'), getValue(sheet, i, ch4 - 'A'));
         }
-//        cell = sheet.getRow(start2).getCell(ch2 - 'A');
         for(int j = start1 - 1; j < end1; j++) {
             row = sheet.getRow(j);
-            cell = row.getCell(ch1 - 'A');
+            cell = row.createCell(ch2 - 'A');
             Object obj = getValue(sheet, j, ch1 - 'A');
             cell.setCellValue((Double)findMap.get(obj));
         }
@@ -41,8 +40,14 @@ public class ExcelUtils {
             return cell.getNumericCellValue();
         }else if("String".equals(type)) {
             return cell.getStringCellValue();
+        }else if("FORMULA".equals(type)){
+            return cell.getArrayFormulaRange();
+        }else if("BOOLEAN".equals(type)){
+            return cell.getBooleanCellValue();
+        }else if("ERROR".equals(type)){
+            return cell.getErrorCellValue();
         }else{
-            return null;
+            return "";
         }
     }
 }
