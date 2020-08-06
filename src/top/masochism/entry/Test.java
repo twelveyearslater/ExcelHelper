@@ -24,9 +24,9 @@ public class Test {
         }
     }*/
 
-    public static void main(String[] args) throws IOException {
-        Excel excel = new Excel("e:\\" , "test.xlsx");
-        ExcelUtils.VLOOKUP(excel, "test2", 'A', 1, 30, 'C', 'G', 1, 30, 'H');
+    public static void main(String[] args) throws Exception {
+        Excel excel = new Excel("h:\\" , "test.xlsx");
+        ExcelUtils.VLOOKUP(excel, "test2", "A1", "A30", "G1", "G30", "H" , "C");
         excel.updateExcel();
     }
 }
